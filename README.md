@@ -1,0 +1,1 @@
+A simple Windows application for setting a timer
