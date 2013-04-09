@@ -23,7 +23,8 @@ namespace test
         decimal secondsTicking = 0;
 
         System.DateTime stopTime;
-        System.TimeSpan s;
+        System.DateTime s;
+        System.TimeSpan b;
 
         // Optional custom reminder message
         string reminderMessage;
@@ -97,7 +98,10 @@ namespace test
 
                 minutesChoseDouble = System.Convert.ToDouble(minutesChosen);
                 stopTime = System.DateTime.Now.AddMinutes(minutesChoseDouble);
-                s = System.DateTime.Now.TimeOfDay;
+                s = System.DateTime.Now;
+
+                b = stopTime.Subtract(s);
+                //s = stopTime.to - s;
 
                 // Everytime timer ticks, timer_Tick will be called.
                 //timer.Tick += new EventHandler(timer_Tick);
@@ -227,17 +231,15 @@ namespace test
          ****************************************************************************/
         void countdown_Tick(object sender, EventArgs e)
         {
-            //updateTimerText();
-
             if (System.DateTime.Now >= stopTime)
             {
                 countdown.Stop();
                 timerExpires();
             }
 
-            string stopTim = s.ToString();
-            label6.Text = stopTim;
-
+            //b = b - System.DateTime.Now.;
+            //string stopTim = b.ToString();
+            //label6.Text = stopTim;
         }
 
         /***************************************************************************************
