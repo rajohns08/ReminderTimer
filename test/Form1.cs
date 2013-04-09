@@ -150,88 +150,93 @@ namespace test
             }
         }
 
+        void updateTimerText()
+        {
+            // New string variables for displaying the values to the screen
+            string secTicks = secondsTicking.ToString();
+            string minTicks = minutesTicking.ToString();
+
+            // Logic for making sure time is shown in xx:xx format
+            if (minutesTicking == 9)
+                minTicks = "09";
+            if (minutesTicking == 8)
+                minTicks = "08";
+            if (minutesTicking == 7)
+                minTicks = "07";
+            if (minutesTicking == 6)
+                minTicks = "06";
+            if (minutesTicking == 5)
+                minTicks = "05";
+            if (minutesTicking == 4)
+                minTicks = "04";
+            if (minutesTicking == 3)
+                minTicks = "03";
+            if (minutesTicking == 2)
+                minTicks = "02";
+            if (minutesTicking == 1)
+                minTicks = "01";
+            if (minutesTicking == 0)
+                minTicks = "00";
+
+            if (secondsTicking == 9)
+                secTicks = "09";
+            if (secondsTicking == 8)
+                secTicks = "08";
+            if (secondsTicking == 7)
+                secTicks = "07";
+            if (secondsTicking == 6)
+                secTicks = "06";
+            if (secondsTicking == 5)
+                secTicks = "05";
+            if (secondsTicking == 4)
+                secTicks = "04";
+            if (secondsTicking == 3)
+                secTicks = "03";
+            if (secondsTicking == 2)
+                secTicks = "02";
+            if (secondsTicking == 1)
+                secTicks = "01";
+            if (secondsTicking == 0)
+                secTicks = "00";
+
+            // Display the time in label6
+            label6.Text = minTicks + ":" + secTicks;
+
+            secondsTicking--;
+
+            // Logic for resetting seconds and decrementing minutes
+            if (secondsTicking < 0)
+            {
+                secondsTicking = 59;
+                minutesTicking--;
+            }
+
+            // Timer has expired so stop the countdown and display 00:00
+            if (minutesTicking < 0)
+            {
+                minutesTicking = 0;
+                secondsTicking = 0;
+                countdown.Stop();
+                timerExpires();
+            }
+        }
+
         /****************************************************************************
          * countdown_Tick handles the countdown timer display updates on the screen. 
          * It is called every second to update the timer shown every second.
          ****************************************************************************/
         void countdown_Tick(object sender, EventArgs e)
         {
+            //updateTimerText();
+
             if (System.DateTime.Now >= stopTime)
             {
                 countdown.Stop();
                 timerExpires();
             }
-            //// New string variables for displaying the values to the screen
-            //string secTicks = secondsTicking.ToString();
-            //string minTicks = minutesTicking.ToString();
-
-            //// Logic for making sure time is shown in xx:xx format
-            //if (minutesTicking == 9)
-            //    minTicks = "09";
-            //if (minutesTicking == 8)
-            //    minTicks = "08";
-            //if (minutesTicking == 7)
-            //    minTicks = "07";
-            //if (minutesTicking == 6)
-            //    minTicks = "06";
-            //if (minutesTicking == 5)
-            //    minTicks = "05";
-            //if (minutesTicking == 4)
-            //    minTicks = "04";
-            //if (minutesTicking == 3)
-            //    minTicks = "03";
-            //if (minutesTicking == 2)
-            //    minTicks = "02";
-            //if (minutesTicking == 1)
-            //    minTicks = "01";
-            //if (minutesTicking == 0)
-            //    minTicks = "00";
-
-            //if (secondsTicking == 9)
-            //    secTicks = "09";
-            //if (secondsTicking == 8)
-            //    secTicks = "08";
-            //if (secondsTicking == 7)
-            //    secTicks = "07";
-            //if (secondsTicking == 6)
-            //    secTicks = "06";
-            //if (secondsTicking == 5)
-            //    secTicks = "05";
-            //if (secondsTicking == 4)
-            //    secTicks = "04";
-            //if (secondsTicking == 3)
-            //    secTicks = "03";
-            //if (secondsTicking == 2)
-            //    secTicks = "02";
-            //if (secondsTicking == 1)
-            //    secTicks = "01";
-            //if (secondsTicking == 0)
-            //    secTicks = "00";
-
-            //Display the time in label6
-            //label6.Text = minTicks + ":" + secTicks;
 
             string stopTim = s.ToString();
             label6.Text = stopTim;
-
-            //secondsTicking--;
-
-            // Logic for resetting seconds and decrementing minutes
-            //if (secondsTicking < 0)
-            //{
-            //    secondsTicking = 59;
-            //    minutesTicking--;
-            //}
-
-            //// Timer has expired so stop the countdown and display 00:00
-            //if (minutesTicking < 0)
-            //{
-            //    minutesTicking = 0;
-            //    secondsTicking = 0;
-            //    countdown.Stop();
-            //    timerExpires();
-            //}
-
 
         }
 
