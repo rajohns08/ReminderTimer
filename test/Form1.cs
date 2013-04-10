@@ -19,8 +19,14 @@ namespace test
 
         double minutesChoseDouble;
 
+        System.Timers.Timer timer = new Timer();
+
         // Variable for displaying seconds on screen
         decimal secondsTicking = 0;
+
+        System.DateTime timeNow;
+        System.DateTime timeAtCall;
+        System.DateTime nextCall;
 
         System.DateTime stopTime;
         System.DateTime s;
@@ -52,6 +58,12 @@ namespace test
 
             // Call setupAlarmSound() to set up alarm file
             setupAlarmSound();
+        }
+
+        
+        void Init()
+        {
+            
         }
 
         /*****************************************************************************************************************
@@ -98,9 +110,9 @@ namespace test
 
                 minutesChoseDouble = System.Convert.ToDouble(minutesChosen);
                 stopTime = System.DateTime.Now.AddMinutes(minutesChoseDouble);
-                s = System.DateTime.Now;
+                //s = System.DateTime.Now;
 
-                b = stopTime.Subtract(s);
+                //b = stopTime.Subtract(s);
                 //s = stopTime.to - s;
 
                 // Everytime timer ticks, timer_Tick will be called.
@@ -111,14 +123,25 @@ namespace test
                 //timer.Interval = Convert.ToInt32(minutesChosen) * (1000 * 60);
 
                 // Countdown function called every second to update countdown timer on screen
-                countdown.Interval = 1000;
+                //countdown.Interval = 1000;
 
                 //timer.Enabled = true;
                 countdown.Enabled = true;
+
+                timeAtCall = System.DateTime.Now;
+                nextCall = timeAtCall.AddSeconds(1);
+
                 //timer.Start();
                 countdown.Start();
             }
 
+        }
+
+        void updateTimers()
+        {
+            timeAtCall = System.DateTime.Now;
+            nextCall = timeAtCall.AddSeconds(1);
+            countdown.Start();
         }
 
         /********************************************************************************************** 
@@ -214,15 +237,6 @@ namespace test
                 secondsTicking = 59;
                 minutesTicking--;
             }
-
-            // Timer has expired so stop the countdown and display 00:00
-            if (minutesTicking < 0)
-            {
-                minutesTicking = 0;
-                secondsTicking = 0;
-                countdown.Stop();
-                timerExpires();
-            }
         }
 
         /****************************************************************************
@@ -235,7 +249,17 @@ namespace test
             {
                 countdown.Stop();
                 timerExpires();
+                return;
             }
+
+            updateTimerText();
+
+            timeNow = System.DateTime.Now;
+            countdown.Stop();
+            System.TimeSpan interval = nextCall - timeNow;//nextCall.Subtract(timeNow);
+            double intervals = interval.TotalSeconds * 1000; ;
+            countdown.Interval = (int)intervals;                          // convert timespan to int
+            updateTimers();
 
             //b = b - System.DateTime.Now.;
             //string stopTim = b.ToString();
